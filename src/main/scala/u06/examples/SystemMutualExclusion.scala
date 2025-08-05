@@ -14,7 +14,7 @@ object SystemMutualExclusion:
 
   // helper
   private def move(l: States)(from: State, to: State): Set[States] =
-    (0 until l.size).toSet.collect:
+    l.indices.toSet.collect:
       case i if l(i) == from => l.updated(i, to)
 
   // System specification, try to capture the abstraction a bit

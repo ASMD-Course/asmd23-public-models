@@ -19,8 +19,9 @@ object SystemAnalysis:
         for
           path <- paths(s, depth - 1)
           next <- system.next(path.last)
-        yield path :+ next
+        yield
+          path :+ next
 
     // complete paths with length '<= depth' (could be optimised)
     def completePathsUpToDepth(s: S, depth:Int): Seq[Path[S]] =
-      (1 to depth).to(LazyList) flatMap (paths(s, _)) filter (complete(_))
+      (1 to depth).to(LazyList) flatMap (paths(s, _)) filter complete
