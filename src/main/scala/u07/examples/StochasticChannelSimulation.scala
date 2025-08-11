@@ -1,8 +1,10 @@
 package u07.examples
 
-import u07.utils.Time
+
 import java.util.Random
 import u07.examples.StochasticChannel.*
+
+import scala.lab.u07.task1.timingPercentage
 
 @main def mainStochasticChannelSimulation =
 
