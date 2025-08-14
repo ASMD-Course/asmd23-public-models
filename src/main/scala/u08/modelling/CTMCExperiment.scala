@@ -6,7 +6,7 @@ object CTMCExperiment:
 
   import CTMCSimulation.*
 
-  opaque type Property[A] = Trace[A] => Boolean
+  type Property[A] = Trace[A] => Boolean
 
   given rnd: Random = new Random
 
