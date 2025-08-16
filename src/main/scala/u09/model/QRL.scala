@@ -3,6 +3,8 @@ package u09.model
 import u09.utils.Stochastics.{cumulative, draw}
 import u09.utils.Stochastics
 
+import scala.annotation.tailrec
+
 trait QRL:
   type State
   type Action
@@ -38,7 +40,8 @@ trait QRL:
       case _ if Stochastics.drawFiltered(_ < f) => Stochastics.uniformDraw(actions)
       case s => bestPolicy(s)
     def vFunction: State => Reward = s => actions.map(this(s, _)).max
-
+    def copy(): Q
+    
   // The learning system, with parameters
   trait LearningProcess:
     def system: System
@@ -48,3 +51,9 @@ trait QRL:
     def q0: Q
     def updateQ(s: State, qf: Q): (State, Q)
     def learn(episodes: Int, episodeLength: Int, qf: Q): Q
+
+    @tailrec
+    final def runSingleEpisode(in: (State, Q), episodeLength: Int): (State, Q) =
+      if episodeLength == 0 || system.terminal(in._1)
+      then in
+      else runSingleEpisode(updateQ(in._1, in._2), episodeLength - 1)

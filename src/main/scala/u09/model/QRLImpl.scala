@@ -30,6 +30,11 @@ trait QRLImpl extends QRL:
     override def update(s: State, a: Action, v: Double): Q = { map += ((s -> a) -> v); this }
     override def toString = map.toString
 
+    def copy(): Q =
+      val newQ = QFunction(actions, v0, terminal, terminalValue)
+      newQ.map ++= this.map
+      newQ
+
 
   case class QSystem(
                       override val environment: Environment,
@@ -61,12 +66,6 @@ trait QRLImpl extends QRL:
 
     @tailrec
     final override def learn(episodes: Int, length: Int, qf: Q): Q =
-      @tailrec
-      def runSingleEpisode(in: (State, Q), episodeLength: Int): (State, Q) =
-        if episodeLength == 0 || system.terminal(in._1)
-          then in
-          else runSingleEpisode(updateQ(in._1, in._2), episodeLength - 1)
-
       episodes match
         case 0 => qf
         case e => learn(e - 1, length, runSingleEpisode((system.initial, qf), length)._2)

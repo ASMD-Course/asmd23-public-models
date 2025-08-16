@@ -160,6 +160,7 @@ class CTMCExperimentExtensionTest extends AnyFunSuite with Matchers:
     val prob1 = stocChannel.experiment(runs = 1000, prop = prop1, s0 = IDLE, timeBound = 1.0)
     val prob2 = stocChannel.experiment(runs = 1000, prop = prop2, s0 = IDLE, timeBound = 1.0)
 
-    // Should be approximately equal
     math.abs(prob1 - prob2) should be < 0.1
+
+
 
