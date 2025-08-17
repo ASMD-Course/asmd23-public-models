@@ -1,7 +1,7 @@
-package scala.lab.u09
+package scala.lab.u09.task1
 
-import u09.model.QMatrix.Move.*
 import u09.model.QMatrix.Move
+import u09.model.QMatrix.Move.*
 import u09.model.QRLImpl
 
 object QMatrixAnalysis extends QRLAnalysis with QRLImpl with App:
@@ -39,8 +39,9 @@ object QMatrixAnalysis extends QRLAnalysis with QRLImpl with App:
 
   def showGrid(config: Configuration, q: Q): String =
     config match
-      case f: Facade => f.show(q.vFunction, "%5.2f")
-      case _ => "Unknown configuration type"
+      case f: Facade =>
+        f.show(q.vFunction, "%5.2f")
+        f.show(s => q.bestPolicy(s).toString, "%7s")
 
   val base = QFunction(Move.values.toSet, 1.0, _ => false)
 

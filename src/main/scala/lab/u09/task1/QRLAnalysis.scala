@@ -1,4 +1,4 @@
-package scala.lab.u09
+package scala.lab.u09.task1
 
 import u09.model.QRL
 
