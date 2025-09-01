@@ -1,7 +1,7 @@
 # Task 1
 - Add a test to check that in no path long at most 100 states mutual  exclusion fails (no more than 1 writer, and no readers and writers together)
 
-Simply explain how you structured the tests (property check) and in particular the one that askede you to add that
+Simply explain how you structured the tests (property check) and in particular the one that asked you to add that
 is `Mutual exclusion for path`.
 
 - Can you extract a small API for representing safety properties?

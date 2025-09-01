@@ -4,17 +4,16 @@ package u07.examples
 import java.util.Random
 import u07.examples.StochasticChannel.*
 
-import scala.lab.u07.task1.timingPercentage
+import scala.lab.u07.task1.*
 
 @main def mainStochasticChannelSimulation =
 
-  print:
-    stocChannel.timingPercentage(IDLE, DONE, new Random)(30)
+  println:
+    //stocChannel.timingPercentage(IDLE, DONE, new Random)(30)
+    stocChannel.statesTiming(IDLE, DONE, new Random)
 
 
 
-//  println:
-//    stocChannel.meanHittingTime(IDLE, DONE, new Random)(1000)
 //
 //  Time.timed:
 //    println:

@@ -3,12 +3,14 @@ package scala.lab.u07.task2
 import u07.modelling.{CTMC, SPN}
 import u07.utils.MSet
 
+import java.util.Random
 import scala.lab.u07.task1.{meanTimeFor, statesTiming, timingPercentage}
+
 
 object StocasticReaderWriters:
 
   enum Place:
-    case P1, P2, P3, P4, P5, P6, P7
+    case P1, P2, P3, P4, P5, P6, P7, P8
 
   export Place.*
   export u07.modelling.CTMCSimulation.*
@@ -20,7 +22,7 @@ object StocasticReaderWriters:
     Trn(MSet(P2), m => 100_000,  MSet(P4),  MSet()),                      // t3
     Trn(MSet(P3, P5), m => 100_000,  MSet(P6, P5),  MSet()),              // t4
     Trn(MSet(P4, P5), m => 100_000,  MSet(P7),  MSet(P6)),                // t5
-    Trn(MSet(P6), m => 0.1 * m(P6),  MSet(P1),  MSet() ),                 // t6
+    Trn(MSet(P6), m => 0.2,  MSet(P1),  MSet() ),                 // t6
     Trn(MSet(P7), m => 0.2,  MSet(P1, P5),  MSet()),                      // t7
   )
 
@@ -31,10 +33,6 @@ def test =
   import StocasticReaderWriters.*
   import scala.lab.u07.task1.CTMCSimulationExt.*
 
-//  cmc.newSimulationTrace(MSet(P1, P1, P5), new java.util.Random)
-//    .take(20)
-//    .toList
-//    .foreach(println)
 
 
   import u07.modelling.SPN.{Trn, toCTMC}
@@ -44,7 +42,7 @@ def test =
 
   val analyzer = SPNAnalyzer[Place](
     Trn(MSet(P1), _ => 1.0, MSet(P2), MSet()),
-    Trn(MSet(P2), _ => 100_000, MSet(P3), MSet()).rateValues(variationSequence*),
+    Trn(MSet(P2), _ => 200_000, MSet(P3), MSet()).rateValues(variationSequence*),
     Trn(MSet(P2), _ => 100_000, MSet(P4), MSet()).rateValues(variationSequence*),
     Trn(MSet(P3, P5), _ => 100_000, MSet(P6, P5), MSet()),
     Trn(MSet(P4, P5), _ => 100_000, MSet(P7), MSet(P6)),
@@ -53,9 +51,9 @@ def test =
   )
 
 
-  analyzer.configurations.foreach: spn =>
-    val cmc = toCTMC(spn)
-    println(cmc.timingPercentage(MSet(P1, P1, P5), MSet(P1, P6, P5), new java.util.Random)(100))
+//  analyzer.configurations.foreach: spn =>
+//    val cmc = toCTMC(spn)
+//    println(cmc.timingPercentage(MSet(P1, P1, P5), MSet(P1, P6, P5), new Random)(100))         
 
 
 //  println:

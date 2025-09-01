@@ -11,7 +11,7 @@ object PriorityRW :
 
   import Place.*
 
-  val adaptivePetriNet = PriorityPetriNet[Place](
+  def adaptivePetriNet = PriorityPetriNet[Place](
     MSet(P1) ~~> MSet(P2),
 
     (MSet(P2) ~~> MSet(P3)).withPriority(m=> if m(P3) > 3 then 10 else 1),
@@ -27,8 +27,8 @@ object PriorityRW :
       else if m(P3) > 0 then 20
       else 5
     ,
-    (MSet(P6) ~~> MSet(P1)).withPriority(10),
-    (MSet(P7) ~~> MSet(P5, P1)).withPriority(10)
+    (MSet(P6) ~~> MSet(P1)) withPriority 10,
+    (MSet(P7) ~~> MSet(P5, P1)) withPriority 10
   ).toSystem
 
 @main

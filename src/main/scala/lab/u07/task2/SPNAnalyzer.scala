@@ -57,15 +57,15 @@ object SPNAnalyzer:
         case Fixed(trn) => LazyList(trn)
         case Variable(trn, gen) => gen(trn)
 
-      cartesianProduct(variations.toList).map(_.toSet)
+      combinations(variations.toList).map(_.toSet)
 
-    private def cartesianProduct(lists: List[LazyList[Trn[P]]]): LazyList[List[Trn[P]]] =
+    private def combinations(lists: List[LazyList[Trn[P]]]): LazyList[List[Trn[P]]] =
       lists match
         case Nil => LazyList(Nil)
         case head :: tail =>
           for
             h <- head
-            t <- cartesianProduct(tail)
+            t <- combinations(tail)
           yield h :: t
 
 

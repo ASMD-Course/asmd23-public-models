@@ -1,0 +1,13 @@
+label "IDLE" = s=0;
+label "SEND" = s=1;
+label "DONE" = s=2;
+label "FAIL" = s=3;
+
+P=? [F <= 5 "DONE"]
+
+P=? [!("DONE") U<=10 "FAIL" ]
+
+P=? [G<=10 !("FAIL")]
+
+P=? [G<=10 "SEND"]
+

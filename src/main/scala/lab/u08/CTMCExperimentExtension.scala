@@ -16,7 +16,7 @@ object CTMCExperimentExtension:
      * Negation of a property
      * @return the negation of the property
      */
-    def unary_! : Property[A] = trace => !p(trace)
+    infix def unary_! : Property[A] = trace => !p(trace)
 
     /**
      * Implication of two properties
@@ -24,7 +24,7 @@ object CTMCExperimentExtension:
      * @param q the other property
      * @return the implication of the two properties
      */
-    def ==>(q: Property[A]): Property[A] = trace => !p(trace) || q(trace)
+    infix def ==>(q: Property[A]): Property[A] = trace => !p(trace) || q(trace)
 
     /**
      * Conjunction of two properties
@@ -32,7 +32,7 @@ object CTMCExperimentExtension:
      * @param q the other property
      * @return the conjunction of the two properties
      */
-    def &&(q: Property[A]): Property[A] = trace => p(trace) && q(trace)
+    infix def &&(q: Property[A]): Property[A] = trace => p(trace) && q(trace)
 
     /**
      * Disjunction of two properties
@@ -40,14 +40,14 @@ object CTMCExperimentExtension:
      * @param q the other property
      * @return the disjunction of the two properties
      */
-    def ||(q: Property[A]): Property[A] = trace => p(trace) || q(trace)
+    infix def ||(q: Property[A]): Property[A] = trace => p(trace) || q(trace)
 
     /**
      * Until operator
      * @param other the other property
      * @return the Until operation for the two properties
      */
-    def U(other: Property[A]): Property[A] = trace =>
+    infix def U(other: Property[A]): Property[A] = trace =>
       import u08.modelling.CTMCSimulation.Trace
 
       @tailrec
@@ -71,7 +71,7 @@ object CTMCExperimentExtension:
      * @tparam A
      * @return
      */
-    def always[A](filter: A => Boolean): Property[A] = ! self.eventually[A](p => !filter(p))
+    def always[A](pred: A => Boolean): Property[A] = ! self.eventually[A](p => !pred(p))
 
     /**
      * Never operator
@@ -80,7 +80,16 @@ object CTMCExperimentExtension:
      * @tparam A
      * @return
      */
-    def never[A](filter: A => Boolean): Property[A] = ! self.always(p => filter(p))
+    def never[A](pred: A => Boolean): Property[A] =  self.always(p => !pred(p))
+
+    /**
+     * Now operator, which checks the property on the first element of the trace
+     *
+     * @param pred the predicate to check
+     * @tparam A
+     * @return
+     */
+    def now[A](pred: A => Boolean): Property[A] = tr => tr.headOption.exists(ev => pred(ev.state))
 
 
 
